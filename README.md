@@ -1,6 +1,3 @@
-Certainly! Here's a concise and professional GitHub project description tailored for your AI Agent built with n8n:
-
----
 
 ## 🤖 AI Agent with Retrieval-Augmented Generation (RAG) in n8n
 
