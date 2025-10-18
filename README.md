@@ -28,6 +28,3 @@ This repository showcases the development of an AI Agent utilizing Retrieval-Aug
 
 For a step-by-step walkthrough, refer to the accompanying [YouTube tutorial](https://youtu.be/-TQ1RIuCCLM?si=wpxOl2yvaS52K3kZ).
 
----
-
-Feel free to adjust the description as per your project's specifics.
