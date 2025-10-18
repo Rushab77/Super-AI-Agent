@@ -1,0 +1,396 @@
+{
+  "name": "Super AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Data Pipeline and Vector Database",
+        "height": 416,
+        "width": 784,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -192,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "f787675a-ccd8-405c-a4e2-d9233f62c2e3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1_JWtMyd54M2Nd-wbSmWrhdh1PqHHQfey",
+          "mode": "list",
+          "cachedResultName": "Gadget Galaxy",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1_JWtMyd54M2Nd-wbSmWrhdh1PqHHQfey"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        208
+      ],
+      "id": "6d3570f2-cb14-4185-94cb-cc2fd615415c",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "sm9WgWkvT7TDmnZX",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        64,
+        160
+      ],
+      "id": "a79461d8-9a3d-4827-9c10-b0467c792521",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "sm9WgWkvT7TDmnZX",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "demorag12",
+          "mode": "list",
+          "cachedResultName": "demorag12"
+        },
+        "options": {
+          "pineconeNamespace": "demorag12"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        160
+      ],
+      "id": "bdf7833d-47c1-485f-ae07-499013ff8116",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "vOooAzTxBnHY9G4s",
+          "name": "PineconeApi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        336
+      ],
+      "id": "777511d9-3cff-482f-84a8-a28ecc8e8450",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ze8c8yv4igRgzKgb",
+          "name": "demorag12openai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        288,
+        304
+      ],
+      "id": "5cac5242-7cd0-4f9b-ab34-2e8153d1bcc2",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        352,
+        416
+      ],
+      "id": "c91ebbed-ef83-4f25-9763-b6aa29346e92",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "content": "Client Chat Agent",
+        "height": 416,
+        "width": 784,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -192,
+        -288
+      ],
+      "typeVersion": 1,
+      "id": "bba438ad-c9b0-4398-af06-ee006703bf96",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        -272
+      ],
+      "id": "c9722aa0-abc6-4a2d-bf72-5941a2f3508c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -144,
+        -224
+      ],
+      "id": "818e055d-7fff-4ffe-ac73-5c6fd2a60dc0",
+      "name": "When chat message received",
+      "webhookId": "05660308-77f0-43a0-bd13-cb6ec48453d6"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-3.7-sonnet",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -80
+      ],
+      "id": "1c45e1bb-30c7-4b70-842c-e2d8e229ab82",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "SpHmQdTwbee8QqKe",
+          "name": "OpenRouter account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Use this part to access the policy and FAQ information from the database",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "demorag12",
+          "mode": "list",
+          "cachedResultName": "demorag12"
+        },
+        "options": {
+          "pineconeNamespace": "demorag12"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        288,
+        -112
+      ],
+      "id": "a058dbe5-0dea-4f99-bff4-bd57f790c034",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "vOooAzTxBnHY9G4s",
+          "name": "PineconeApi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "9d350fb2-96b4-4aeb-8a9b-4ee85b30e36a",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ze8c8yv4igRgzKgb",
+          "name": "demorag12openai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "                                       Super AI Agent",
+        "height": 80,
+        "width": 784,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -192,
+        -368
+      ],
+      "typeVersion": 1,
+      "id": "753ace7f-b06e-4100-ba2c-2e3dfd97a8fa",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "25ecc4ba-b9e6-4344-8d97-fee82a1b2de6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "32a18af209ff7b43ce572e4d2cfcb513b3cd367bc89cb97078fdc5756ef2dc05"
+  },
+  "id": "RDKt4vYcQMv3Hdo5",
+  "tags": []
+}
